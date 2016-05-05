@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+
+    version = '1.0'
+    ext {
+        appName = 'xmr-editor'
+        scalaVersion = '2.11.8'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+project(":editor") {
+    apply plugin: 'scala'
+
+    dependencies {
+        compile 'org.scalafx:scalafx_2.11:8.0.92-R10'
+    }
+}
+
+tasks.eclipse.doLast {
+    delete ".project"
+}
+
+task createWrapper(type: Wrapper) { gradleVersion = "2.9" }
